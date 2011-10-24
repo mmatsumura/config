@@ -1,4 +1,13 @@
+execute 'source ' . vimrc_path . '/autoload/pathogen.vim'
+call pathogen#infect(vimrc_path . '/bundle')
+
+
 set nocompatible
+let mapleader=","
+set modelines=0
+set encoding=utf-8
+
+
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
@@ -37,20 +46,8 @@ endfunction
 :let g:p4ClientRoot = 'c:/dev/ws/perforce'
 :let g:p4PromptToCheckout = 1
 :let g:p4CheckOutDefault = 1
-":let g:p4EnableMenu = 1                  " Enabled the Menus
-":let g:p4UseExpandedMenu = 1
-":let g:p4EnablePopupMenu = 1
-":let g:p4UseExpandedPopupMenu = 0
-
-" Adjust our Menus to Accomodate the Perforce Menu(s)
-"an 10.450 &File.-SEP_SCM-   <Nop>
-"let g:p4MenuRoot = "10.455 &File."      " The Parent Menu for Menubar Perforce Menu
-
-"an 1.57 PopUp.-SEP_SCM-     <Nop>
-"let g:p4PopupMenuRoot = "1.56 PopUp."   " The Parent Menu for Popup Perforce Menu
 runtime perforce/perforceutils.vim
 runtime perforce/perforcemenu.vim
-
 
 :set cmdheight=2
 " paj using PSCP on Windows. Works best with Pageant.
@@ -59,4 +56,48 @@ if ($OS =~ "Windows")
   let g:netrw_scp_cmd="c:\\bin\\pscp.exe -q -batch"
 endif
 au GUIEnter * simalt ~x "x on an English Windows version. n on a French one
+
+set backspace=indent,eol,start
+set scrolloff=3
+set visualbell
+set ttyfast
+set cursorline
+set ruler
+set number
+set laststatus=2
+nnoremap <tab> %
+vnoremap <tab> %
+
+
+
+nnoremap <leader>d :NERDTreeToggle<cr>
+
+set wildmenu             
+set wildmode=longest:full
+
+         
+set ignorecase
+set smartcase
+
+" Display a place holder character for tabs and trailing spaces
+set list
+set listchars=trail:·,nbsp:·,tab:>·
+
+
+" Enable plugins and indentation based on filetype
+filetype plugin indent on
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+set history=1000         " remember more commands and search history
+set undolevels=1000      " use many muchos levels of undo
+set wildignore=*.swp,*.bak,*.pyc,*.class
+
+nmap <silent> ,/ :nohlsearch<CR>
+nnoremap ; :
+colorscheme molokai
+:set guioptions-=T  "remove toolbar
+
 
