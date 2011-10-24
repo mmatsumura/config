@@ -1,0 +1,62 @@
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+
+:set tabstop=4
+:set shiftwidth=4
+:set expandtab
+:set nobackup
+:set guifont=Courier_New:h9:cANSI
+:let g:p4ClientRoot = 'c:/dev/ws/perforce'
+:let g:p4PromptToCheckout = 1
+:let g:p4CheckOutDefault = 1
+":let g:p4EnableMenu = 1                  " Enabled the Menus
+":let g:p4UseExpandedMenu = 1
+":let g:p4EnablePopupMenu = 1
+":let g:p4UseExpandedPopupMenu = 0
+
+" Adjust our Menus to Accomodate the Perforce Menu(s)
+"an 10.450 &File.-SEP_SCM-   <Nop>
+"let g:p4MenuRoot = "10.455 &File."      " The Parent Menu for Menubar Perforce Menu
+
+"an 1.57 PopUp.-SEP_SCM-     <Nop>
+"let g:p4PopupMenuRoot = "1.56 PopUp."   " The Parent Menu for Popup Perforce Menu
+runtime perforce/perforceutils.vim
+runtime perforce/perforcemenu.vim
+
+
+:set cmdheight=2
+" paj using PSCP on Windows. Works best with Pageant.
+if ($OS =~ "Windows")
+  let g:netrw_cygwin= 0
+  let g:netrw_scp_cmd="c:\\bin\\pscp.exe -q -batch"
+endif
+au GUIEnter * simalt ~x "x on an English Windows version. n on a French one
+
