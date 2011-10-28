@@ -54,6 +54,7 @@ runtime perforce/perforcemenu.vim
 if ($OS =~ "Windows")
   let g:netrw_cygwin= 0
   let g:netrw_scp_cmd="c:\\bin\\pscp.exe -q -batch"
+  let g:ackprg="perl c:\\bin\\ack.pl -H --nocolor --nogroup --column"
 endif
 au GUIEnter * simalt ~x "x on an English Windows version. n on a French one
 
