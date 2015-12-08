@@ -2,6 +2,7 @@ execute 'source ' . vimrc_path . '/autoload/pathogen.vim'
 call pathogen#infect(vimrc_path . '/bundle')
 
 
+set noundofile
 set nocompatible
 let mapleader=","
 set modelines=0
